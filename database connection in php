@@ -1,0 +1,17 @@
+<?php
+function db_conn()
+{
+$db_host = "localhost";
+$db_name = "hospital";
+$db_username = "asiftyagi";
+$db_password = "kiet";
+
+$conn = mysqli_connect($db_host,$db_username,$db_password,$db_name);
+if (mysqli_connect_error())  
+  {
+	echo "connection failed";
+	exit();
+  }
+  return $conn;
+}
+?>
