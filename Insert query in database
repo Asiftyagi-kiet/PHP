@@ -1,0 +1,46 @@
+<?php
+function db_conn()
+{
+$db_host = "localhost";
+$db_name = "hospital";
+$db_username = "asiftyagi";
+$db_password = "kiet";
+
+$conn = mysqli_connect($db_host,$db_username,$db_password,$db_name);
+if (mysqli_connect_error())  
+  {
+	echo "connection failed";
+	exit();
+  }
+  return $conn;
+}
+?>
+/* database conn------------*/
+	
+
+<?php
+/* this is a server securety post */
+if (isset($_POST['submit'])) 
+ {
+   $conn = db_conn();
+
+$name = $_POST['name'];
+$email = $_POST['email'];
+$phone = $_POST['phone'];
+$date= $_POST['date1'];
+$department = $_POST['department'];
+$gender = $_POST['gender'];
+$message = $_POST['message'];
+
+$sql_insert="insert into  patient (name,email,phone,date1,department,gender,message) VALUES ('$name', '$email', '$phone', '$date', '$department', '$gender', '$message')";
+ $stmt = mysqli_query($conn, $sql_insert);
+
+ if ($stmt) {
+    echo "Insert successfully";
+ }
+ else
+ {
+   echo "not insert database";
+}
+}
+?>
