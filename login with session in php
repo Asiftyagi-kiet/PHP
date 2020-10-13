@@ -1,0 +1,65 @@
+<?php  
+session_start();//session starts here  
+  
+?>
+
+//html tag use this space--------------
+
+//database connnection---------------
+<?php
+function db_conn()
+{
+$db_host = "localhost";
+$db_name = "hospital";
+$db_username = "asiftyagi";
+$db_password = "kiet";
+
+$conn = mysqli_connect($db_host,$db_username,$db_password,$db_name);
+if (mysqli_connect_error())  
+  {
+	echo "connection failed";
+	exit();
+  }
+  return $conn;
+}
+?>
+//login query------------------
+<?php  
+if(isset($_POST['login']))  
+{  
+	 $conn = db_conn();
+    $user_email=$_POST['email'];  
+    $user_pass=$_POST['pass'];  
+    
+  //this query are use match the database user---------------------------
+  
+    $check_user="select * from admin WHERE email='$user_email'AND pass='$user_pass'";  
+  
+    $run=mysqli_query($conn, $check_user);  
+  // var_dump($run);
+    if(mysqli_num_rows($run))  
+    {  
+        echo "<script>window.open('welcome.php','_self')</script>";  
+  //session are here like print email etc.------------
+        $_SESSION['email']=$user_email;//here session is used and value of $user_email store in $_SESSION.  
+  
+    } 
+     
+    if($user_email=='')  
+    {  
+       
+        echo"<script>alert('Please enter the email')</script>";  
+exit();  
+    }  
+  
+    if($user_pass=='')  
+    {  
+        echo"<script>alert('Please enter the password')</script>";  
+exit();  
+    }   
+    else  
+    {  
+      echo "<script>alert('Please correct enter the email id and password !')</script>";  
+    }  
+}  
+?>  
