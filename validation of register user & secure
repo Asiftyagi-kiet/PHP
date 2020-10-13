@@ -1,0 +1,150 @@
+<?php 
+session_start();
+ ?>
+
+
+<html>  
+<head lang="en">  
+    <meta charset="UTF-8">  
+        
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">  
+    <title>Registration</title>  
+</head>  
+<style> 
+body
+{
+    background-image: url(images/unnamed.jpg);
+    background-size:cover;
+    width: 100%;
+} 
+    .login-panel {  
+        margin-top: 180px; 
+        text-align: center;
+    }
+    .box
+    {
+ 
+        margin: 0px auto;
+    }
+   
+
+  
+</style>  
+  
+<body>  
+ 
+<div class="container">  
+    
+    <div class="row">  
+        <div class="col-md-4 box">  
+            <div class="login-panel panel panel-success">  
+                <div class="panel-heading">  
+                    <h2 class="panel-title"> Users-Detail</h2>  
+                </div>  
+                <div class="panel-body">  
+                    <form role="form" method="post" action="">  
+                        <fieldset>  
+                            <div class="form-group">  
+                                <input class="form-control" placeholder="Username" name="name" type="text" autofocus>  
+                            </div>  
+  
+                            <div class="form-group">  
+                                <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>  
+                            </div>  
+                            <div class="form-group">  
+                                <input class="form-control" placeholder="Password" name="pass" type="password" value="">  
+                            </div>  
+  
+  
+                            <input class="btn btn-lg btn-danger btn-block" type="submit" value="Sign Up" name="register" >  
+  
+                        </fieldset>  
+                    </form>  
+                    <center><b>Already registered ?</b> <br></b><a href="admin.php" style="color: black">Login here</a></center><!--for centered text-->  
+                </div>  
+            </div>  
+        </div>  
+    </div>  
+</div>  
+  
+</body>  
+  
+</html>  
+    
+  <?php
+function db_conn()
+{
+$db_host = "localhost";
+$db_name = "hospital";
+$db_username = "asiftyagi";
+$db_password = "kiet";
+
+$conn = mysqli_connect($db_host,$db_username,$db_password,$db_name);
+if (mysqli_connect_error())  
+  {
+    echo "connection failed";
+    exit();
+  }
+  return $conn;
+}
+?>
+<?php  
+$email = $_SESSION['email'];
+if ($email==true) {
+    
+}
+else
+{
+    header('location:admin.php');   
+}
+
+    if(isset($_POST['register']))  
+{  
+    $conn = db_conn();
+    $user_name=$_POST['name']; 
+    $user_pass=$_POST['pass'];  
+    $user_email=$_POST['email'];
+  
+  
+    if($user_name=='')  
+    {  
+       
+        echo"<script>alert('Please enter the name')</script>";  
+exit();  
+    }  
+  
+    if($user_pass=='')  
+    {  
+        echo"<script>alert('Please enter the password')</script>";  
+exit();  
+    }  
+  
+    if($user_email=='')  
+    {  
+        echo"<script>alert('Please enter the email')</script>";  
+    exit();  
+    }  
+  
+    $check_email_query="select * from admin WHERE email='$user_email'";  
+    $run_query=mysqli_query($conn, $check_email_query);  
+  
+    if(mysqli_num_rows($run_query)>0)  
+    {  
+echo "<script>alert('Email $user_email is already exist in our database, Please try another one!')</script>";  
+  exit();
+    }  
+ 
+    $sql_insert="insert into  admin (name,email,pass) VALUES ('$user_name', '$user_email','$user_pass')";
+
+ $stmt = mysqli_query($conn, $sql_insert);
+
+ if ($stmt) {
+   ?><br><h1><center> <?php echo "Thank You ! Your Detail Successfull Insert";?><br> Please Login</center></h1>
+   <?php
+ }
+ else
+ {
+   echo "not insert database";
+}
+} 
+?>
