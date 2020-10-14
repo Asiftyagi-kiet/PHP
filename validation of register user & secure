@@ -133,6 +133,8 @@ exit();
 echo "<script>alert('Email $user_email is already exist in our database, Please try another one!')</script>";  
   exit();
     }  
+    // password hash------------------
+$user_pass = password_hash($user_pass, PASSWORD_DEFAULT); 
  
     $sql_insert="insert into  admin (name,email,pass) VALUES ('$user_name', '$user_email','$user_pass')";
 
