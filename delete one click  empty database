@@ -1,0 +1,28 @@
+<?php include 'db.php';?>
+<?php
+session_start();
+// page not access any one person-----------------------
+$email = $_SESSION['email'];
+if ($email==true) {
+    
+}
+else
+{
+    // header('location:admin.php');   
+}
+    $conn = db_conn();
+$query = "DELETE FROM  patient";
+$data = mysqli_query($conn, $query);
+if($data==true)
+{
+	 echo"<script>alert('Your database is deleted today')</script>";
+
+}
+else
+{
+	 echo"<script>alert('Your database not')</script>";
+}
+exit();
+
+?>
+
