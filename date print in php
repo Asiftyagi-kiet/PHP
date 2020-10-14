@@ -1,0 +1,3 @@
+<?php
+// Return current date and time from the remote server
+echo date("d-F-Y ") . "<br>";?>
